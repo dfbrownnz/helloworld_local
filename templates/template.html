@@ -1,0 +1,156 @@
+{% extends "layout.html" %}
+{% block content %}
+  <title>{% block page %}{{title}}{% endblock %}</title>
+    <script>
+
+function loadScore(team_name) {
+ 
+
+  var xhttp = new XMLHttpRequest();
+  //url = "http://127.0.0.1:5000/score/" + team_name ;
+ url = "http://localhost:5000/score/" + team_name ;
+  document.getElementById("demo").innerHTML = url;
+  xhttp.open("GET", url , false);
+  xhttp.send();
+  document.getElementById("demo").innerHTML = xhttp.responseText ; //+ xhttp.getAllResponseHeaders() ;
+}
+
+    function myFunction(name) {
+      yo = "{{ url_for('about') }}";
+      //alert(name + yo);
+      //document.getElementById("demo").innerHTML = window.location.href + '?page=2&filter=' + name;
+      //window.location.href =  window.location.hostname + 'about?page=2&filter=' + name;
+      document.getElementById("demo").innerHTML = window.location.hostname +  ":"+ window.location.port + '/about?page=2&filter=' + name;
+    }
+    
+function GetKeyFromClick( column_value, column_idx , column_name) {
+    //column_name = column_name -1 ;
+    document.getElementById("myColNumber").value  = column_name ;
+    document.getElementById("demo").innerHTML = column_name + ':' + column_value  + ':' + column_idx;
+    document.getElementById("myInput").value  = column_value ;
+
+    if( column_name=='File Viewer')
+    {
+        // http://127.0.0.1:5000/file_viewer?folder_file_name=D:/data/prices/tesla/TSLA_cash-flow_financials.csv
+        window.location.assign("http://127.0.0.1:5000/file_viewer?folder_file_name=" + column_value);
+    }
+}
+function GetKeyFromClickClear( ) {
+    document.getElementById("myInput").value  = '' ;
+    document.getElementById("myColNumber").value  = 0 ;
+//    TableSearchFunctionB();
+} 
+
+
+function TableSearchFunctionB() 
+{
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+var Column_Number =  parseInt( document.getElementById("myColNumber").value );
+
+//alert(document.getElementById("myColNumber").value);
+//alert(document.getElementById("myInput").value);
+
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+filter = filter.toString();
+filter = filter.toUpperCase();
+table = document.getElementById("myTableEventsOther");
+
+tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[Column_Number];
+    if (td) {
+      txtValue = td.textContent ||  td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+
+}
+
+
+function loadDoc() {
+
+loadScore('56-17 Brown');
+}
+
+
+    </script>
+  
+<style> 
+
+ 
+ #dataframe {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#dataframe td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#dataframe tr:nth-child(even){background-color: #f2f2f2;}
+
+#dataframe tr:hover {background-color: #ddd;}
+
+#dataframe th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+ </style>
+  
+<script type="text/javascript" src="{{ url_for('static', filename='myjs.js') }}"></script>
+         
+    <div class="row">
+                <h5>{{ my_list|join('; ') }}  {{ my_listc|join('; ') }} </h5>
+    <form>
+    <input type="text" id="myInput" hidden>
+    <input type="text" id="myColNumber" hidden>
+    </form>
+    
+ 
+    </div>
+
+
+<h2 color="black" class="text-center text-dark"> {{title}}</h2>
+
+<p id="demo"  onclick="GetKeyFromClickClear()">Clear.</p>
+
+When do option prices get updated?
+
+  <div class="table-responsive">
+        <table class="table table-hover" id="myTableEventsOther">
+          <thead class="thead-dark">
+              <tr>
+                  {% for col in colnames %}
+                  <th>{{ col }}</th>
+                  {% endfor %}
+              </tr>
+          </thead>
+          <tbody>
+              {% for record in records %}
+              <tr class="border">
+                  {% for col in colnames %}
+ <td class="nopadding" onclick="GetKeyFromClick('{{ record[col] }} ','{{loop.index}}','{{col}}')" > {{ record[col] }}      </td>
+                  {% endfor %}
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+</div>
+
+  {% endblock %}
+ 
+
