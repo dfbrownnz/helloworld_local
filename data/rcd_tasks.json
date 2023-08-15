@@ -1,0 +1,39 @@
+{
+  "tasks": [
+    {
+      "task_id": 1,
+      "person": "Bob",
+      "group": "Swimmer",
+      "description": "next swim meet",
+      "next_date": 20230814
+    },
+    {
+      "task_id": 4,
+      "person": "Charlie",
+      "group": "Dog",
+      "description": "next dog meet",
+      "next_date": 20230815
+    },
+    {
+      "task_id": 3,
+      "person": "Ted",
+      "group": "Comedian",
+      "description": "next joke meet",
+      "next_date": 20230816
+    },
+    {
+      "task_id": 5,
+      "person": "Fines",
+      "group": "RoboCos",
+      "description": "next outing meet",
+      "next_date": 20230817
+    },
+    {
+      "task_id": 6,
+      "person": "Don",
+      "group": "Farmer",
+      "description": "next sheep meet",
+      "next_date": 20230817
+    }
+  ]
+}
