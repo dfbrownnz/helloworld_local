@@ -11,8 +11,11 @@ class JsonRcds:
 
     def test(self):
         print('JsonRcds:test ')
-        self.basic_put()
-
+        #self.basic_put()
+        dict_data=[{'type': 'type1'}, {'type': 'type2'}, {'type': 'type2'}, {'type': 'type3'}]
+        dict_filter=['type2', 'type3']
+        res = self.basic_filter(dict_filter , dict_data)
+        print(res)
 
     def test_return(self):
         return self.file_cwd()
@@ -24,6 +27,20 @@ class JsonRcds:
         files = os.listdir(dir_path)
         files = [f for f in files if os.path.isfile(dir_path + '/' + f)]  # Filtering only the files.
         return files
+
+    def basic_filter(self, dict_filter , dict_data):
+        """ filter json records for a given json subset
+         dict_data=[{'type': 'type1'}, {'type': 'type2'}, {'type': 'type2'}, {'type': 'type3'}]
+         dict_filter=['type2', 'type3']
+        self.basic_filter(dict_filter , dict_data)
+        """
+        #expectedResult = [d for d in dict_data if d['type'] not in dict_filter]
+        expectedResult = [d for d in dict_data if d['type'] in dict_filter]
+        # >> > exampleSet = [{'type': 'type1'}, {'type': 'type2'}, {'type': 'type2'}, {'type': 'type3'}]
+        # >> > keyValList = ['type2', 'type3']
+        # >> > expectedResult = [d for d in exampleSet if d['type'] in keyValList]
+        # >> > expectedResult
+        return expectedResult
 
     def basic_add(self):
         print('add')
